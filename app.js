@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 let nextID = 3;
-const items = [{ id: 1, name: 'tea' }, { id: 2, name: 'pen' }];
+let items = [{ id: 1, name: 'tea' }, { id: 2, name: 'pen' }];
 
 const app = express();
 app.use('/api', bodyParser.json());
@@ -33,7 +33,7 @@ app.post('/api/items', (req, res) => {
         res.status(400).end();
     };
 });
-app.put('api/items/:id', (req, res) => {
+app.put('/api/items/:id', (req, res) => {
     const id = Number(req.params.id);
     const body = req.body;
     const item = items.find((i) => i.id == id);
@@ -49,11 +49,12 @@ app.put('api/items/:id', (req, res) => {
         res.status(404).send(`Can not get item with ID: ${id}`);
     };
 });
-app.delete('api/items/:id', (req, res) => {
+app.delete('/api/items/:id', (req, res) => {
     const id = Number(req.params.id);
     const item = items.find((i) => i.id == id);
     if (item) {
-        items = items.filter(i => i.id !== id);
+        items = items.filter((i) => i.id !== id);
+		res.end();
     } else {
         res.status(404).send(`Can not get item with ID: ${id}`);
     };
